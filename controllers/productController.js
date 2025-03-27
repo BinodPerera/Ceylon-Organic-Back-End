@@ -1,4 +1,4 @@
-const Product = require("../models/product");
+const Product = require("./../models/Product");
 const fs = require("fs");   // Reason: To delete the images from the server
 const path = require("path");   // Reason: To get the file extension
 
