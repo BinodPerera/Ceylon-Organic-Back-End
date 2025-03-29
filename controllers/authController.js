@@ -69,9 +69,13 @@ const getProfile = async ( req, res) => {
         const user = await User.findById(req.user.userId).select("-password");
         if (!user) return res.status(400).json({ message: "User not found!"});
         res.json(user);
+
+        // Debugging
+        console.log("User Profile:", user); // Debugging
     }
     catch (error) {
         res.status(500).json({ message: "Something went wrong When loading user Profile Details!", error: `error: ${error.message}`});
+        console.error("Error loading user profile:", error.message); // Debugging
     }
 }
 
@@ -83,7 +87,7 @@ const logoutUser = ( req, res) => {
 
 const isLogged = async (req, res) => {
     try {
-        const user = await User.findById(req.user.userId).select( username, role);
+        const user = await User.findById(req.user.userId).select("username role");
         if(!user){
             return res.status(400).json({ error: "Logged user not found!" });
         } else {
