@@ -16,7 +16,7 @@ app.use(cookieParser()); // Reason: To store JWT in cookies
 // Middleware - Enable CORS to allow cookies
 app.use(
   cors({
-    origin: "https://ceylon-organic-front-end.vercel.app",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
