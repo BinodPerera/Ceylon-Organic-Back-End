@@ -51,8 +51,8 @@ const loginUser = async (req, res) => {
         // send JWT as HTTP only coockie
         res.cookie( "token", token, {
             httpOnly: true,
-            secure: process.env.Node_ENV === "production", // set to `true` in production
-            sameSite: "strict",
+            secure: true, // set to `true` in production
+            sameSite: "none",
             maxAge: 3600000,
         });
 
