@@ -45,10 +45,12 @@ const getProductById = async (req, res) => {
 
 // get products by category
 const getProductsByCategory = async (req, res) => {
+    console.log(req.params.category);
     try {
         const products = await Product.find({ category: req.params.category });
         if(!products) return res.status(404).json({ error: "Products not found" });
         res.status(200).json(products);
+        console.log(req.params.category);
     }
     catch (error) {
         res.status(500).json({ error: error.message });
