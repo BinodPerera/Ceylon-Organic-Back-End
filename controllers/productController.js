@@ -50,7 +50,6 @@ const getProductsByCategory = async (req, res) => {
         const products = await Product.find({ category: req.params.category });
         if(!products) return res.status(404).json({ error: "Products not found" });
         res.status(200).json(products);
-        console.log(req.params.category);
     }
     catch (error) {
         res.status(500).json({ error: error.message });
@@ -113,4 +112,39 @@ const deleteProduct = async (req, res) => {
     }
 }
 
-module.exports = { insertProduct, getAllProducts, getProductById, getProductsByCategory, updateProduct, deleteProduct };
+// get product by search
+const searchProduct = async (req, res) => {
+  try {
+    const search = req.params.search_prompt; // directly access the param
+    const query = search
+      ? {
+          $or: [
+            { name: { $regex: search, $options: 'i' } },
+            { description: { $regex: search, $options: 'i' } },
+          ],
+        }
+      : {};
+
+    const products = await Product.find(query); // pass query directly
+
+    if (!products || products.length === 0) {
+      return res.status(404).json({ error: "Products not found" });
+    }
+
+    res.status(200).json(products);
+    console.log(products);
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  insertProduct,
+  getAllProducts,
+  getProductById,
+  getProductsByCategory,
+  updateProduct,
+  deleteProduct,
+  searchProduct
+};

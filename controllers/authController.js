@@ -83,10 +83,15 @@ const logoutUser = ( req, res) => {
 }
 
 const isLogged = async (req, res) => {
-    if(req.cookies.token){
-        return res.status(200).json({ authenticated: true });
-    }else{
-        return res.status(200).json({ authenticated: false });
+    try{
+        if(req.cookies.token){
+            return res.status(200).json({ authenticated: true });
+        }else{
+            return res.status(200).json({ authenticated: false });
+        }
+    }
+    catch(error){
+        console.log("Error");
     }
 }
 
