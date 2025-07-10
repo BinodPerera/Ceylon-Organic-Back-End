@@ -73,7 +73,7 @@ Base URL:
 
 1. **Clone the repo**
 ```bash
-    git clone https://github.com/YOUR_USERNAME/YOUR_BACKEND_REPO.git
+    git clone https://github.com/BinodPerera/Ceylon-Organic-Back-End.git
     cd YOUR_BACKEND_REPO
 ```
 
@@ -85,7 +85,7 @@ Base URL:
 
 3. **Create a .env file**
 ```bash
-PORT=5000
+PORT=####
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 ```
