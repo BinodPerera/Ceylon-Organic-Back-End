@@ -128,10 +128,19 @@ resource "aws_instance" "app" {
 
   user_data = <<-EOF
     #!/bin/bash
-    dnf update -y
-    dnf install -y docker
-    systemctl start docker
-    systemctl enable docker
+    if command -v apt-get &>/dev/null; then
+      apt-get update -y
+      apt-get install -y docker.io
+      systemctl start docker
+      systemctl enable docker
+      usermod -aG docker ubuntu || true
+    elif command -v dnf &>/dev/null; then
+      dnf update -y
+      dnf install -y docker
+      systemctl start docker
+      systemctl enable docker
+      usermod -aG docker ec2-user || true
+    fi
     
     # Authenticate Docker against ECR
     aws ecr get-login-password --region \${var.aws_region} | docker login --username AWS --password-stdin \${data.aws_caller_identity.current.account_id}.dkr.ecr.\${data.aws_region.current.name}.amazonaws.com/\${lower(var.project_name)}-app
