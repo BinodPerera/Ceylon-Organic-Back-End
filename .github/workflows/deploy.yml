@@ -29,10 +29,10 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       
-      - name: Build, tag, and push root to Amazon ECR
+      - name: Build, tag, and push app to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ceylon-organic-back-end-root
+          ECR_REPOSITORY: ceylon-organic-back-end-app
           IMAGE_TAG: ${{ github.sha }}
         run: |
           # Create repository if it doesn't exist

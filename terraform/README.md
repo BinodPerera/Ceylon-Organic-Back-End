@@ -61,7 +61,7 @@ terraform apply
 ### 5️⃣ Push Docker Images to ECR
 After the infrastructure is provisioned, you need to push your Docker images to the newly created ECR repositories.
 
-#### 🐳 For Component: `root`
+#### 🐳 For Component: `app`
 1. **Authenticate Docker to ECR**:
    ```bash
    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com
@@ -69,12 +69,12 @@ After the infrastructure is provisioned, you need to push your Docker images to 
 2. **Build and Tag your Docker image**:
    ```bash
    # From the root of your repository or component folder
-   docker build -t Ceylon-Organic-Back-End-root .
-   docker tag Ceylon-Organic-Back-End-root:latest <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/Ceylon-Organic-Back-End-root:latest
+   docker build -t Ceylon-Organic-Back-End-app .
+   docker tag Ceylon-Organic-Back-End-app:latest <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/Ceylon-Organic-Back-End-app:latest
    ```
 3. **Push to ECR**:
    ```bash
-   docker push <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/Ceylon-Organic-Back-End-root:latest
+   docker push <YOUR_AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/Ceylon-Organic-Back-End-app:latest
    ```
 
 

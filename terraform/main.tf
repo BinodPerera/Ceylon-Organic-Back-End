@@ -124,7 +124,7 @@ resource "aws_eip" "web_eip" {
 resource "aws_eip_association" "eip_assoc" {
   
   
-  instance_id   = aws_instance.root.id
+  instance_id   = aws_instance.app.id
   allocation_id = aws_eip.web_eip.id
   
   
@@ -133,7 +133,7 @@ resource "aws_eip_association" "eip_assoc" {
 
 # --- EC2 Instances ---
 
-resource "aws_instance" "root" {
+resource "aws_instance" "app" {
   ami                  = "ami-0c7217cdde317cfec"
   instance_type        = "t3.micro"
   subnet_id            = aws_subnet.public_1.id
@@ -150,17 +150,17 @@ resource "aws_instance" "root" {
     systemctl enable docker
     
     # Authenticate Docker against ECR
-    aws ecr get-login-password --region \${var.aws_region} | docker login --username AWS --password-stdin \${data.aws_caller_identity.current.account_id}.dkr.ecr.\${data.aws_region.current.name}.amazonaws.com/\${lower(var.project_name)}-root
+    aws ecr get-login-password --region \${var.aws_region} | docker login --username AWS --password-stdin \${data.aws_caller_identity.current.account_id}.dkr.ecr.\${data.aws_region.current.name}.amazonaws.com/\${lower(var.project_name)}-app
     
     # Run the container
     docker run -d -p 80:3000 \
-      --name root \
+      --name app \
       --restart always \
       -e PORT=3000 \
-      \${data.aws_caller_identity.current.account_id}.dkr.ecr.\${data.aws_region.current.name}.amazonaws.com/\${lower(var.project_name)}-root:latest
+      \${data.aws_caller_identity.current.account_id}.dkr.ecr.\${data.aws_region.current.name}.amazonaws.com/\${lower(var.project_name)}-app:latest
   EOF
 
   tags = {
-    Name = "${var.project_name}-root"
+    Name = "${var.project_name}-app"
   }
 }
