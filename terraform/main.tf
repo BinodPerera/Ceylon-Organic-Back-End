@@ -130,7 +130,7 @@ resource "aws_instance" "app" {
     #!/bin/bash
     if command -v apt-get &>/dev/null; then
       apt-get update -y
-      apt-get install -y docker.io
+      apt-get install -y docker.io awscli
       systemctl start docker
       systemctl enable docker
       usermod -aG docker ubuntu || true
