@@ -114,22 +114,6 @@ resource "aws_security_group" "web_sg" {
 
 # --- Elastic IP (Conditional) ---
 
-resource "aws_eip" "web_eip" {
-  domain = "vpc"
-  tags = {
-    Name = "${var.project_name}-eip"
-  }
-}
-
-resource "aws_eip_association" "eip_assoc" {
-  
-  
-  instance_id   = aws_instance.app.id
-  allocation_id = aws_eip.web_eip.id
-  
-  
-}
-
 
 # --- EC2 Instances ---
 
